@@ -3,63 +3,52 @@ package com.example.container2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import android.widget.TextView; // CORREGIDO: Ahora usa android.widget
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.ContactosViewHolder> {
 
-    ArrayList<ContactosModel> datos;
+    private List<ContactosModel> listaEntrenamientos;
 
-    //ViewHolder Custom para poder asociar los datos del XML como variable
-    static class ContactosViewHolder extends RecyclerView.ViewHolder
-    {
-        final TextView txtNombre ;
-        final TextView txtTelefono ;
-        final TextView txtCorreo;
-
-        ContactosViewHolder (@NonNull View itemView)
-        {
-            super(itemView);
-
-            txtNombre = itemView.findViewById(R.id.txt_contacto_nombre);
-            txtCorreo = itemView.findViewById(R.id.txt_contacto_correo);
-            txtTelefono = itemView.findViewById(R.id.txt_contacto_telefono);
-        }
+    public ContactosAdapter(List<ContactosModel> listaEntrenamientos) {
+        this.listaEntrenamientos = listaEntrenamientos;
     }
 
-    ContactosAdapter (ArrayList<ContactosModel> datos_usuario )
-    {
-        datos = datos_usuario;
-    }
-
-    //Es obligatorio y asocia el XML a el objeto a msotrar en pantalla
+    @NonNull
     @Override
-    public ContactosViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType )
-    {
-        //normalmente esto siempre es igual y lo unico que cambiara sera el nombre del XML que cargare, eb este caso es item_contacto
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_contacto, viewGroup, false);
+    public ContactosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contacto, parent, false);
         return new ContactosViewHolder(view);
     }
 
-    //es pobligatorio y  enlaza los datos del elemento actual en pantalla al XML
-    public void onBindViewHolder(ContactosViewHolder viewHolder, int posicion_actual)
-    {
-        //obtener el objecto actual
-        ContactosModel dato_actual = datos.get(posicion_actual);
-        //cargar informacion a nuestro xml a partir del objeto actual
-        viewHolder.txtNombre.setText(dato_actual.nombre);
-        viewHolder.txtCorreo.setText(dato_actual.correo);
-        viewHolder.txtTelefono.setText(dato_actual.telefono);
+    @Override
+    public void onBindViewHolder(@NonNull ContactosViewHolder holder, int position) {
+        ContactosModel item = listaEntrenamientos.get(position);
+        holder.tvTipo.setText("Entrenamiento: " + item.getTipo());
+        holder.tvIntensidad.setText("Intensidad: " + item.getIntensidad());
+
+        StringBuilder estrellas = new StringBuilder();
+        for (int i = 0; i < item.getDificultad(); i++) {
+            estrellas.append("⭐");
+        }
+        holder.tvDificultad.setText("Esfuerzo: " + estrellas.toString());
     }
 
-    //es obligatorio y retorna el largo actual de nuestra lista
     @Override
-    public int getItemCount()
-    {
-        return datos.toArray().length;
+    public int getItemCount() {
+        return listaEntrenamientos.size();
+    }
+
+    public static class ContactosViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTipo, tvIntensidad, tvDificultad;
+
+        public ContactosViewHolder(@NonNull View itemView) {
+            super(itemView); // CORREGIDO: Se cambió 'holder' por 'itemView'
+            tvTipo = itemView.findViewById(R.id.tvItemTipo);
+            tvIntensidad = itemView.findViewById(R.id.tvItemIntensidad);
+            tvDificultad = itemView.findViewById(R.id.tvItemDificultad);
+        }
     }
 }

@@ -1,14 +1,17 @@
 package com.example.container2;
 
 public class ContactosModel {
-    public String nombre ;
-    public String telefono;
-    public String correo ;
+    private String tipo;
+    private String intensidad;
+    private int dificultad;
 
-    ContactosModel(String _nombre, String _telefono, String _correo)
-    {
-        nombre = _nombre;
-        telefono = _telefono;
-        correo = _correo ;
+    public ContactosModel(String tipo, String intensidad, int dificultad) {
+        this.tipo = tipo;
+        this.intensidad = intensidad;
+        this.dificultad = dificultad;
     }
+
+    public String getTipo() { return tipo; }
+    public String getIntensidad() { return intensidad; }
+    public int getDificultad() { return dificultad; }
 }

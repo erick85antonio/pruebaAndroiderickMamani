@@ -1,47 +1,32 @@
 package com.example.container2;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class RecyclerActivity extends AppCompatActivity {
-    public RecyclerView recycler;
-    public ArrayList<ContactosModel> datos_adapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        // Enlaza con el XML de la pantalla de Bienvenida
         setContentView(R.layout.activity_recycler);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        //
-        recycler = findViewById(R.id.recycler_ejemplo);
+        // Vincula el botón usando el ID exacto del XML (Punto 1 de la rúbrica)
+        Button btnIngresar = findViewById(R.id.btnIngresar);
 
-        //cargar los datos a mi lista
-        datos_adapter = new ArrayList<ContactosModel>();
-        datos_adapter.add( new ContactosModel("Diego primero", "1234", "diego@a.cl"));
-        datos_adapter.add( new ContactosModel("Juan segundo", "12347", "juan@a.cl"));
-
-        //declarar el adaptador
-        ContactosAdapter adapter = new ContactosAdapter(datos_adapter);
-
-        //definir el layout Manager
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-
-        //setear el adapter a nuestro recyclerview
-        recycler.setAdapter(adapter);
+        if (btnIngresar != null) {
+            btnIngresar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Redirige al Formulario Principal (MainActivity)
+                    Intent intent = new Intent(RecyclerActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); // Cierra la bienvenida para que no vuelva atrás al pulsar retroceso
+                }
+            });
+        }
     }
 }

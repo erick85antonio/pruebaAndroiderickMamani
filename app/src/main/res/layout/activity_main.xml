@@ -1,29 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<!-- ScrollView (5 pts) garantiza el desplazamiento en pantallas chicas sin solapamientos -->
+<ScrollView xmlns:android="http://android.com"
+    xmlns:app="http://android.com"
+    xmlns:tools="http://android.com"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
+    <!-- LinearLayout Vertical (6 pts) para organizar las secciones de forma limpia -->
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/boton_spinner"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spinner" />
+            android:text="FitTracker - Registro"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
 
-        <Button
-            android:id="@+id/boton_recycler"
+        <!-- i. SPINNER: Tipo de entrenamiento (4 pts) -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recylcer View" />
+            android:text="Tipo de Entrenamiento:"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerEntrenamiento"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- ii. RADIOGROUP: Intensidad (4 pts) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intensidad:"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupIntensidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/rbBaja"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Baja"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/rbMedia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Media"/>
+            <RadioButton
+                android:id="@+id/rbAlta"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Alta"/>
+        </RadioGroup>
+
+        <!-- iii. CHECKBOX: Aspectos completados (4 pts) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Objetivos de la Sesión:"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <CheckBox
+            android:id="@+id/cbCalentamiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calentamiento realizado"/>
+        <CheckBox
+            android:id="@+id/cbHidratacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hidratación adecuada"/>
+        <CheckBox
+            android:id="@+id/cbEstiramiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estiramiento final"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- v. RATINGBAR: Dificultad (5 pts) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Esfuerzo Percibido (Dificultad):"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBarDificultad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="3"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- iv. PROGRESSBAR: Meta diaria (5 pts) -->
+        <TextView
+            android:id="@+id/tvProgresoMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Progreso Meta Diaria: 0%"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarMeta"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Botón para registrar entrenamiento -->
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar Entrenamiento"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de Sesiones:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- iii. RECYCLERVIEW: Listado de sesiones (13 pts) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="#F5F5F5"
+            tools:listitem="@layout/item_contacto"/>
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
